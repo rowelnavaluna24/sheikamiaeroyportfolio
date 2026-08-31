@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[Your Name] — Marketing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FDF9F8;
+    --blush:#F3E3E1;
+    --blush-deep:#C98C93;
+    --rose:#B8636E;
+    --ink:#2B2224;
+    --muted:#8C7A7C;
+    --line:#EADCD9;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    font-weight:300;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{ color:inherit; text-decoration:none; }
+  .wrap{ max-width:740px; margin:0 auto; padding:0 24px; }
+  .wrap-wide{ max-width:920px; margin:0 auto; padding:0 24px; }
+
+  h1,h2,h3{ font-family:'Cormorant Garamond', serif; font-weight:500; line-height:1.08; }
+
+  .flourish{ width:100%; height:20px; display:block; }
+  .flourish path{ fill:none; stroke:var(--blush-deep); stroke-width:1.4; stroke-linecap:round; }
+
+  /* ---------- nav ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(253,249,248,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    max-width:920px; margin:0 auto; padding:20px 24px;
+  }
+  .brand{ font-family:'Cormorant Garamond', serif; font-weight:600; font-size:21px; letter-spacing:0.01em; }
+  .navlinks{ display:flex; gap:34px; font-size:14px; color:var(--muted); }
+  .navlinks a:hover{ color:var(--rose); }
+
+  .menu-btn{
+    display:none; flex-direction:column; justify-content:center; gap:5px;
+    width:36px; height:36px; background:none; border:none; cursor:pointer; flex:none;
+  }
+  .menu-btn span{ display:block; width:20px; height:1.5px; background:var(--ink); transition:transform .2s ease, opacity .2s ease; }
+  .menu-btn.open span:nth-child(1){ transform:translateY(6.5px) rotate(45deg); }
+  .menu-btn.open span:nth-child(2){ opacity:0; }
+  .menu-btn.open span:nth-child(3){ transform:translateY(-6.5px) rotate(-45deg); }
+
+  .mobile-menu{
+    display:none; flex-direction:column;
+    border-bottom:1px solid var(--line);
+    padding:4px 24px 20px;
+  }
+  .mobile-menu a{ padding:12px 0; font-size:15px; border-top:1px solid var(--line); color:var(--muted); }
+  .mobile-menu a:first-child{ border-top:none; }
+  .mobile-menu.open{ display:flex; }
+
+  /* ---------- hero ---------- */
+  .hero{ padding:100px 0 76px; }
+  .hero p.kicker{ font-family:'Cormorant Garamond', serif; font-style:italic; font-size:20px; color:var(--rose); margin-bottom:16px; }
+  .hero h1{ font-size:clamp(40px,6.4vw,64px); letter-spacing:0.005em; }
+  .hero .pitch{ margin-top:22px; font-size:17px; line-height:1.7; color:var(--muted); max-width:520px; font-weight:400; }
+  .hero .cta-row{ display:flex; gap:14px; margin-top:34px; flex-wrap:wrap; }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:13px 26px; border-radius:100px; font-size:14px; font-weight:500;
+    border:1px solid var(--ink);
+  }
+  .btn.primary{ background:var(--ink); color:var(--paper); border-color:var(--ink); }
+  .btn.primary:hover{ background:var(--rose); border-color:var(--rose); }
+  .btn.ghost{ border-color:var(--blush-deep); color:var(--ink); }
+  .btn.ghost:hover{ background:var(--blush); }
+
+  /* ---------- work ---------- */
+  section{ padding:64px 0; }
+  .section-head{ margin-bottom:44px; }
+  .section-head p.eyebrow{ font-family:'Cormorant Garamond', serif; font-style:italic; font-size:18px; color:var(--rose); margin-bottom:8px; }
+  .section-head h2{ font-size:clamp(28px,4vw,38px); }
+  .section-head p.desc{ color:var(--muted); margin-top:10px; font-size:16px; max-width:520px; font-weight:400; }
+
+  .project{
+    display:grid; grid-template-columns:90px 1fr; gap:28px;
+    padding:34px 0; border-top:1px solid var(--line);
+  }
+  .project:last-child{ border-bottom:1px solid var(--line); }
+  .project .year{ font-family:'Cormorant Garamond', serif; font-size:16px; color:var(--muted); padding-top:4px; }
+  .project h3{ font-size:24px; margin-bottom:8px; font-weight:500; }
+  .project h3 a:hover{ color:var(--rose); }
+  .project p{ color:var(--muted); font-size:15.5px; line-height:1.65; max-width:560px; font-weight:400; }
+  .tags{ display:flex; gap:8px; flex-wrap:wrap; margin-top:14px; }
+  .tag{
+    font-size:12px; color:var(--rose);
+    background:var(--blush); padding:5px 12px; border-radius:100px;
+  }
+
+  /* ---------- about ---------- */
+  .about{ background:var(--blush); }
+  .about-grid{ display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px; }
+  .about-body p{ font-size:16.5px; line-height:1.75; color:var(--ink); margin-bottom:16px; font-weight:400; }
+  .skill-group{ margin-bottom:24px; }
+  .skill-group h4{ font-family:'Cormorant Garamond', serif; font-style:italic; font-size:17px; color:var(--rose); font-weight:500; margin-bottom:10px; }
+  .skill-list{ font-size:15px; color:var(--ink); line-height:1.9; font-weight:400; }
+
+  /* ---------- contact ---------- */
+  .contact h2{ font-size:clamp(32px,6vw,50px); max-width:640px; }
+  .contact .email{
+    display:inline-block; margin-top:26px; font-family:'Cormorant Garamond', serif; font-weight:500; font-size:26px;
+    border-bottom:1.5px solid var(--blush-deep);
+  }
+  .contact .email:hover{ color:var(--rose); border-color:var(--rose); }
+  .social-row{ display:flex; gap:24px; margin-top:34px; font-size:14px; color:var(--muted); }
+  .social-row a:hover{ color:var(--rose); }
+
+  footer{ border-top:1px solid var(--line); padding:28px 0; }
+  .foot-row{ display:flex; justify-content:space-between; font-size:13px; color:var(--muted); flex-wrap:wrap; gap:10px; }
+
+  @media (max-width:760px){
+    .navlinks{ display:none; }
+    .menu-btn{ display:flex; }
+    .about-grid{ grid-template-columns:1fr; gap:36px; }
+    .project{ grid-template-columns:1fr; gap:10px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="#" class="brand">Sheika Mia E. Navaluna</a>
+    <div class="navlinks">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <button class="menu-btn" id="menuBtn" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#work">Work</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <p class="kicker">Marketing strategist</p>
+    <h1>Sheika Mia E. Navaluna builds brands<br>that connect.</h1>
+    <p class="pitch">[One or two sentences about the kind of marketing you do and who you do it for. Keep it specific — the channels you focus on, the kind of results you chase.]</p>
+    <div class="cta-row">
+      <a href="#work" class="btn primary">See my work</a>
+      <a href="#contact" class="btn ghost">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+<svg class="flourish" viewBox="0 0 400 20" preserveAspectRatio="none"><path d="M0,10 C40,10 40,3 80,3 C120,3 120,17 160,17 C200,17 200,3 240,3 C280,3 280,17 320,17 C360,17 360,10 400,10"/></svg>
+
+<section id="work">
+  <div class="wrap-wide">
+    <div class="section-head">
+      <p class="eyebrow">Selected work</p>
+      <h2>Recent projects</h2>
+      <p class="desc">[A short line introducing the projects below — what kind of work this section represents.]</p>
+    </div>
+
+    <div class="project">
+      <div class="year">2026</div>
+      <div>
+        <h3><a href="#">[Campaign or Client Name]</a></h3>
+        <p>[Short description of the campaign or project — what the goal was, what you did, and the result. Numbers help here, e.g. reach, engagement, or conversion lift.]</p>
+        <div class="tags">
+          <span class="tag">Social strategy</span>
+          <span class="tag">Content</span>
+          <span class="tag">Paid ads</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="year">2025</div>
+      <div>
+        <h3><a href="#">[Campaign or Client Name]</a></h3>
+        <p>[Short description of the campaign or project — what the goal was, what you did, and the result. Numbers help here, e.g. reach, engagement, or conversion lift.]</p>
+        <div class="tags">
+          <span class="tag">Email marketing</span>
+          <span class="tag">Branding</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="year">2025</div>
+      <div>
+        <h3><a href="#">[Campaign or Client Name]</a></h3>
+        <p>[Short description of the campaign or project — what the goal was, what you did, and the result. Numbers help here, e.g. reach, engagement, or conversion lift.]</p>
+        <div class="tags">
+          <span class="tag">SEO</span>
+          <span class="tag">Content strategy</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="wrap-wide about-grid">
+    <div class="about-body">
+      <p class="eyebrow" style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:18px; color:var(--rose); margin-bottom:8px;">About</p>
+      <h2 style="font-size:clamp(28px,4vw,38px); margin-bottom:22px;">A little about me</h2>
+      <p>[A few sentences about your background — how you got into marketing, what you focus on now, and what kind of work energizes you.]</p>
+      <p>[Optional second paragraph — mention experience, industries you've worked with, or anything that gives context to your work.]</p>
+    </div>
+    <div>
+      <div class="skill-group">
+        <h4>Strategy</h4>
+        <div class="skill-list">Brand strategy<br>Campaign planning<br>Market research</div>
+      </div>
+      <div class="skill-group">
+        <h4>Content &amp; channels</h4>
+        <div class="skill-list">Social media<br>Email marketing<br>SEO / content</div>
+      </div>
+      <div class="skill-group">
+        <h4>Tools</h4>
+        <div class="skill-list">Google Analytics<br>Meta Ads Manager<br>Canva / Figma</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<svg class="flourish" viewBox="0 0 400 20" preserveAspectRatio="none"><path d="M0,10 C40,17 40,3 80,10 C120,17 120,3 160,10 C200,17 200,3 240,10 C280,17 280,3 320,10 C360,17 360,3 400,10"/></svg>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <p class="eyebrow" style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:18px; color:var(--rose); margin-bottom:8px;">Contact</p>
+    <h2>Have a project in mind?<br>Let's talk about it.</h2>
+    <a href="mailto:you@example.com" class="email">you@example.com</a>
+    <div class="social-row">
+      <a href="#">GitHub</a>
+      <a href="#">LinkedIn</a>
+      <a href="#">X / Twitter</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap-wide foot-row">
+    <span>© 2026 [Your Name]</span>
+    <span>Built with care.</span>
+  </div>
+</footer>
+
+<script>
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  menuBtn.addEventListener('click', ()=>{
+    const isOpen = mobileMenu.classList.toggle('open');
+    menuBtn.classList.toggle('open', isOpen);
+    menuBtn.setAttribute('aria-expanded', isOpen);
+  });
+  mobileMenu.querySelectorAll('a').forEach(link=>{
+    link.addEventListener('click', ()=>{
+      mobileMenu.classList.remove('open');
+      menuBtn.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>
+
+</body>
+</html>
